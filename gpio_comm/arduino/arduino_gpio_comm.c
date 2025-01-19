@@ -1,6 +1,6 @@
 #define NUM_PINS 10
-const int INPUT_PINS[NUM_PINS] = {2, 3, 4, 5, 6};
-const int OUTPUT_PINS[NUM_PINS] = {7, 8, 9, 10, 11};
+const int INPUT_PINS[NUM_PINS] = {2, 3, 4, 5, 6, 7, 8, 9};
+const int OUTPUT_PINS[NUM_PINS] = {10, 11};
 
 void setup() {
   for(int i = 0; i < NUM_PINS; i++){
