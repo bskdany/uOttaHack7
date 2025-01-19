@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "template": {
+    "projectId": "uOttaHack7",
+    "artifactName": "uOttaHack7",
+    "buildType": "SimpleMake",
+    "language": "c",
+    "archlist": "x86_64,aarch64le",
+    "artifactType": "Executable"
+  }
+}

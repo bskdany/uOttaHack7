@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "template": {
+    "projectId": "gpio_test",
+    "artifactName": "gpio_test",
+    "buildType": "QnxRecMake",
+    "language": "c",
+    "archlist": "x86_64,aarch64le",
+    "artifactType": "Executable"
+  }
+}
