@@ -61,28 +61,28 @@ while True:
     print(decimal)
     
     if (input_data[0] == 0 and input_data[1] == 0):
-        print("Forward")
+        print("Forward sensor packet")
         latest_data["front_sensor"] = decimal
         # GPIO.output(movement_output[0], GPIO.HIGH)
         # GPIO.output(movement_output[1], GPIO.HIGH)
     elif (input_data[0] == 0 and input_data[1] == 1):
-        print("Right")
+        print("Right sensor packet")
         latest_data["right_sensor"] = decimal
         # GPIO.output(movement_output[0], GPIO.HIGH)
         # GPIO.output(movement_output[1], GPIO.LOW)
     elif (input_data[0] == 1 and input_data[1] == 0):
-        print("back")
+        print("Back sensor packet")
         latest_data["back_sensor"] = decimal
         # GPIO.output(movement_output[0], GPIO.LOW)
         # GPIO.output(movement_output[1], GPIO.LOW)
     elif (input_data[0] == 1 and input_data[1] == 1):
-        print("Left")
+        print("Left sensor packet")
         latest_data["left_sensor"] = decimal
         # GPIO.output(movement_output[0], GPIO.LOW)
         # GPIO.output(movement_output[1], GPIO.HIGH)
     
     max_direction = max(latest_data, key=latest_data.get)
-    print(max_direction)
+    print(f"Biggest direction: {max_direction}")
 
 
     if (abs(latest_data["front_sensor"] - latest_data["back_sensor"]) < 50) and (abs(latest_data["right_sensor"] - latest_data["left_sensor"]) < 50):
