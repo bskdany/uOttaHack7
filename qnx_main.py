@@ -33,6 +33,11 @@ def rotateLeft():
     GPIO.output(movement_output[0], GPIO.LOW)
     GPIO.output(movement_output[1], GPIO.HIGH)
 
+def rotateAround():
+    print("Rotating around")
+    GPIO.output(movement_output[0], GPIO.LOW)
+    GPIO.output(movement_output[1], GPIO.HIGH)
+
 def stopRumba():
     print("Stopping")
     GPIO.output(movement_output[0], GPIO.LOW)
@@ -66,7 +71,7 @@ while True:
         # GPIO.output(movement_output[0], GPIO.HIGH)
         # GPIO.output(movement_output[1], GPIO.LOW)
     elif (input_data[0] == 1 and input_data[1] == 0):
-        print("stop? back?")
+        print("back")
         latest_data["back_sensor"] = decimal
         # GPIO.output(movement_output[0], GPIO.LOW)
         # GPIO.output(movement_output[1], GPIO.LOW)
@@ -80,7 +85,7 @@ while True:
     print(max_direction)
 
 
-    if (latest_data["front_sensor"] - latest_data["back_sensor"] < 50) and (latest_data["right_sensor"] - latest_data["left_sensor"] < 50):
+    if (abs(latest_data["front_sensor"] - latest_data["back_sensor"]) < 50) and (abs(latest_data["right_sensor"] - latest_data["left_sensor"]) < 50):
         stopRumba()
     elif max_direction == "front_sensor":
         moveForward()
@@ -89,7 +94,7 @@ while True:
     elif max_direction == "left_sensor":
         rotateLeft()
     elif max_direction == "back_sensor":
-        rotateRight()
+        rotateAround()
 
 
     
