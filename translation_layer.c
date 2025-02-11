@@ -10,7 +10,6 @@ void driveLeftWheel(int16_t velocity);
 void driveRightWheel(int16_t velocity);
 void driveBothWheels(int16_t velocityLeft, int16_t velocityRight);
 
-
 void roomba_setup(){
   // Set up the device detect pin as output
   pinMode(DEVICE_DETECT_PIN, OUTPUT);
@@ -37,24 +36,17 @@ void roomba_setup(){
   // Reinitialize Serial1 at 19200 baud
   Serial.begin(19200);
 
-  // Send the byte values over serial
+  // Initialize Roomba Communication
   Serial.write(128);
-  delay(1000); // 1 second delay
+  delay(1000); 
   Serial.write(130);
   delay(200);
   Serial.write(132);
   delay(200);
-  // delay(1000);
-  // driveBothWheels(50, 50);
-    // delay(200);
-    // driveBothWheels(0,0);
-  // Serial.write(133);
 }
-
 
 void setup() {
   roomba_setup();
-
 
   for (int i = 0; i < NUM_SENSOR_PINS; i++) {
     pinMode(LIGHT_SENSOR_PINS[i], OUTPUT);
@@ -64,25 +56,7 @@ void setup() {
     pinMode(MOVEMENT_PINS[i], INPUT);
   }
 
-  
-  // Serial.begin(9600); I have to disable this beause i'm using the roomba one
-
 }
-
-// void loop() {
-  // No operation in loop
-  // driveLeftWheel(200, 1000);
-  // delay(1000);
-
-  // Drive right wheel
-  // driveRightWheel(200, 1000);
-  // delay(1000);
-
-  // Drive both wheels
-  // driveBothWheels(200, 200, 1000);
-  // delay(1000);
-// }
-
 
 void driveLeftWheel(int16_t velocity) {
   // Drive left wheel by setting the right wheel's velocity to 0
@@ -138,16 +112,10 @@ void splitIntegerToBinary(int number, int* binaryArray, int arraySize) {
 }
 
 void loop() {
-  // Simulated sensor values
-  // int right = 400;
-  // int behind = 400;
-  // int left = 400;
-  // int front = 400;
-    int right = analogRead(A3);
+  int right = analogRead(A3);
   int behind = analogRead(A2);
   int left = analogRead(A1);
   int front = analogRead(A0);
-
 
   // Shift values
   int shiftedRight = right >> 3;
@@ -160,38 +128,26 @@ void loop() {
    // Loop through directions
    for (int i = 0; i < 4; i++) {
     if (i == 0) {
+      // Front
       digitalWrite(LIGHT_SENSOR_PINS[0], LOW);
       digitalWrite(LIGHT_SENSOR_PINS[1], LOW);
       splitIntegerToBinary(shiftedFront, split, sizeof(split)/sizeof(split[0]));
-      // Serial.print("FRONT: ");
-      // Serial.println(shiftedFront);
     } else if (i == 1) {
+      // Right
       digitalWrite(LIGHT_SENSOR_PINS[0], LOW);
       digitalWrite(LIGHT_SENSOR_PINS[1], HIGH);
       splitIntegerToBinary(shiftedRight, split, sizeof(split)/sizeof(split[0]));
-      // Serial.print("RIGHT: ");
-      // Serial.println(shiftedRight);
     } else if (i == 2) {
+      // Back
       digitalWrite(LIGHT_SENSOR_PINS[0], HIGH);
       digitalWrite(LIGHT_SENSOR_PINS[1], LOW);
       splitIntegerToBinary(shiftedBehind, split, sizeof(split)/sizeof(split[0]));
-      // Serial.print("BEHIND: ");
-      // Serial.println(shiftedBehind);
     } else if (i == 3) {
+      // Left
       digitalWrite(LIGHT_SENSOR_PINS[0], HIGH);
       digitalWrite(LIGHT_SENSOR_PINS[1], HIGH);
       splitIntegerToBinary(shiftedLeft, split, sizeof(split)/sizeof(split[0]));
-      // Serial.print("LEFT: ");
-      // Serial.println(left);
-      // Serial.println(shiftedLeft);
     }
-
-    // Print the binary representation
-    // Serial.print("Binary Representation: ");
-    // for (int j = sizeof(split)/sizeof(split[0]) -1; j >=0 ; j--) {
-        // Serial.print(split[j]);
-    // }
-    // Serial.println();
 
     // Update light sensor pins based on split array
     for (int j =2; j < NUM_SENSOR_PINS; j++) {
@@ -226,17 +182,4 @@ void loop() {
    else{
     driveBothWheels(0,0);
    }
-
-
-  //  // Check movement pins and print their status
-  //  if (digitalRead(MOVEMENT_PINS[0]) == HIGH) {
-
-  //    Serial.println("LEFT");
-  //  } else {
-  //    Serial.println(digitalRead(MOVEMENT_PINS[0]));
-  //  }
-  //  if (digitalRead(MOVEMENT_PINS[1]) == HIGH) {
-  //    Serial.println("RIGHT");
-  //  }
 }
-
